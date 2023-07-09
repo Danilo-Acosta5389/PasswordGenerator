@@ -34,6 +34,7 @@
             checkBox2 = new CheckBox();
             textBox2 = new TextBox();
             label1 = new Label();
+            label2 = new Label();
             SuspendLayout();
             // 
             // textBox1
@@ -104,18 +105,32 @@
             label1.TabIndex = 5;
             label1.Text = "Passwd_Gen";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(67, 279);
+            label2.Name = "label2";
+            label2.Size = new Size(120, 21);
+            label2.TabIndex = 6;
+            label2.Text = "Passwd Length: ";
+            label2.Click += label2_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(468, 326);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(textBox2);
             Controls.Add(checkBox2);
             Controls.Add(checkBox1);
             Controls.Add(button1);
             Controls.Add(textBox1);
+            MaximumSize = new Size(484, 365);
+            MinimumSize = new Size(484, 365);
             Name = "Form1";
             Text = "Passwd_Gen";
             ResumeLayout(false);
@@ -130,5 +145,6 @@
         private CheckBox checkBox2;
         private TextBox textBox2;
         private Label label1;
+        private Label label2;
     }
 }

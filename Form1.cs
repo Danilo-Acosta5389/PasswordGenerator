@@ -1,8 +1,11 @@
+using System.Security.Cryptography;
+
 namespace PasswdGen
 {
     public partial class Form1 : Form
     {
-        public string length = "";
+        public char[] import = File.ReadAllText("C:\\Work\\PasswdGen\\chars.txt").ToCharArray();
+        public string passWd = "";
         public Form1()
         {
             InitializeComponent();
@@ -43,15 +46,35 @@ namespace PasswdGen
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            length = textBox2.Text;
+            passWd = textBox2.Text;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
+            {
                 textBox1.Text = PasswdGen();
+            }
+
             else if (checkBox2.Checked)
-                textBox1.Text= PasswdGen(Int32.Parse(length));
+            {
+                try
+                {
+                    textBox1.Text = PasswdGen(Int32.Parse(passWd));
+                    if (textBox1.Text == "")
+                    {
+                        textBox1.Text = PasswdGen(import.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+
+
+            label2.Text = $"Passwd Length: {textBox1.Text.Length}";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -61,18 +84,41 @@ namespace PasswdGen
 
         private string PasswdGen(int value = 30)
         {
-            char[] import = File.ReadAllText("C:\\Work\\PasswdGen\\chars.txt").ToCharArray();
-            List<char> charList = new List<char>();
             Random rand = new Random();
-            var bytes = new byte[value];
-            for (int i = 0; i < value; i++)
+            var scrambledList = import.ToList().OrderBy(x => rand.Next()).ToArray();
+
+            List<char> newList = new List<char>();
+
+            //var bytes = new byte[value];
+            //string newPasswd = "";
+
+            //using (var rng = RandomNumberGenerator.Create())
+            //{
+            //    rng.GetBytes(bytes,0,v);
+            //    newPasswd = Convert.ToBase64String(bytes);
+            //}
+            try
             {
-                int r = rand.Next(1, value+1);
-                charList.Add(import[r]);
+                for (int i = 0; i < value; i++)
+                {
+                    int r = rand.Next(1, value);
+                    newList.Add(scrambledList[r]);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Input length is too high. Max lenght is 107.\nSetting value to max length.");
+                return "";
             }
 
-            string output = string.Join("",charList.ToArray());
-            return output;
+            string newPasswd = string.Join("", newList.ToArray());
+            newList.Clear();
+            return newPasswd;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
