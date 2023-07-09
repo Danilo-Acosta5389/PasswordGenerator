@@ -45,7 +45,6 @@
             textBox1.ReadOnly = true;
             textBox1.Size = new Size(340, 23);
             textBox1.TabIndex = 0;
-            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // button1
             // 
@@ -114,7 +113,6 @@
             label2.Size = new Size(120, 21);
             label2.TabIndex = 6;
             label2.Text = "Passwd Length: ";
-            label2.Click += label2_Click;
             // 
             // Form1
             // 
