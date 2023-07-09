@@ -63,9 +63,13 @@ namespace PasswdGen
         {
             char[] import = File.ReadAllText("C:\\Work\\PasswdGen\\chars.txt").ToCharArray();
             List<char> charList = new List<char>();
-
+            Random rand = new Random();
+            var bytes = new byte[value];
             for (int i = 0; i < value; i++)
-                charList.Add(import[i]);
+            {
+                int r = rand.Next(1, value+1);
+                charList.Add(import[r]);
+            }
 
             string output = string.Join("",charList.ToArray());
             return output;
